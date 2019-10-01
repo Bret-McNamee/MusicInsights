@@ -73,7 +73,7 @@ sum(survey$pseudonym_generator == "Fake rapper name generator")
 
 ##spread(pollution{df to reshape}, size{col for keys}, amount{col for new values})
 
-survey$time_submitted <- parse_datetime(survey$time_submitted, format = "%m/%d/%y %H:%M")
+Person$time_submitted <- parse_datetime(Person$time_submitted, format = "%m/%d/%y %H:%M")
 ```
 
 3 rules for tidy data
