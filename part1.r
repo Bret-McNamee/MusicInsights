@@ -1,22 +1,13 @@
----
-title: "Music Insights"
-author: "Bret McNamee"
-output: html_notebook
----
-
-First, we need tidyverse to handle data importing and wrangling...
-
-```{r}
+## ------------------------------------------------------------------------
 ##install.packages("tidyverse")
 library("tidyverse")
 
 survey <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/music-survey.csv")
 
 preferences <- read_csv("https://raw.githubusercontent.com/introdsci/MusicSurvey/master/preferences-survey.csv")
-```
-Changing the column names to something better.
 
-```{r}
+
+## ------------------------------------------------------------------------
 
  colnames(survey)[colnames(survey)=='First, we are going to create a pseudonym for you to keep this survey anonymous (more or less). Which pseudonym generator would you prefer?'] <- "pseudonym_generator"
 
@@ -107,14 +98,9 @@ library(ggplot2)
 ggplot(data = newdf, 
        aes(x=pseudonym,y=avg)) + geom_col()
 
-```
-##my way .. doesn't account for the non \t artist/song
-newthing <- left_join(Favorite_Song, Ratings, by = "pseudonym")
-newthing2 <- separate(newthing, artist_song,into = c("artist","song"), sep = "\t")
-newthing3 <- (filter(newthing2, newthing2$song == newthing2$favorite_song))
-newthing4 <- tibble(pseudonym = newthing3$pseudonym, favorite_song = newthing3$song, rated = newthing3$rating)
 
-```{r}
+
+## ------------------------------------------------------------------------
 ##Kevin's way
 earliest_time <- min(Ratings$time[Ratings$pseudonym == "Angel Angel"])
 
@@ -127,36 +113,6 @@ favorite_rating <- Ratings %>% left_join(Favorite_Song, by="pseudonym") %>% filt
                                
 
 
-
-
-```
-
-3 rules for tidy data
-
-1. one column per variable
-2. one row per observation
-3. cohesive table
-
-four tables we need
-Person 
-Favorite Song
-Song Ratings
-Musical Talents
-
- ?strsplit to split data
- ?parse_datetime
-dplyr
-tidyr
-do library command to load them
-tibble is a df with extra constraints and features
-
-POSIXct(calendartime) - AKA epoch time (seconds since jan 1 1970)
-
-POSIXlt(localtime) - more complext representation
-stored as its own object -
-(collection of month day year hour minute second *timezone*)
-library(readr)
-Parse_datetime(date, format = "%H:%M:%S", )
 
 
 

@@ -1,0 +1,47 @@
+---
+title: "Regression"
+author: "Bret McNamee"
+date: "11/14/2019"
+output: html_document
+---
+# This hunk of code loads all of our datasets from our index.rmd file
+```{r}
+suppressMessages(library("tidyverse"))
+suppressMessages(library("knitr"))
+purl("insights.Rmd", output = "part1.r")
+source("part1.r")
+```
+# This adds the avg ratings to the Person table, that was precalculated in the previous file
+```{r}
+
+Person <- dplyr::left_join(Person, newdf, by = "pseudonym")
+```
+# This code splits up our Person table so that 75% is put into the train variable and the remaining 25% is put into our test variable
+These are used for creating our model and seeing how accurate it is
+```{r}
+
+set.seed(86) 
+ 
+sample <- sample.int(n = nrow(Person), 
+                     size = floor(.75*nrow(Person)), # Selecting 70% of data
+                     replace = F)
+ 
+train <- Person[sample, ]
+test  <- Person[-sample, ]
+
+```
+
+# This creates the model using our training data
+After wittling down our IV we determined that when year_born is our DV the only IV that generates a p-value below the 0.05 threshold is academic_lvl
+
+```{r}
+model <- lm(year_born~academic_level, train)
+summary(model)
+```
+
+# Here we are using our test data to see how accurate our model is at predicting age.
+
+```{r}
+predictions <- model %>% predict(test)
+
+```
