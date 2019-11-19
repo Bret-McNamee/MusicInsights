@@ -1,3 +1,3 @@
 # MusicInsights
 
-[Regression stuff] (Regression.html)
+[Regression stuff](Regression.html)
